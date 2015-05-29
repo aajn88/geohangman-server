@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
  */
-@RestController("antonio")
+@RestController("/antonio")
 public class HelloWorldController {
 	
 	@RequestMapping("/hello")
