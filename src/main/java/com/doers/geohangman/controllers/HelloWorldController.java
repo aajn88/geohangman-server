@@ -1,14 +1,14 @@
 package com.doers.geohangman.controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
  */
-@Controller
+@RestController
 public class HelloWorldController {
 	
 	@RequestMapping("/hello")
