@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+         
+	<changeSet id="GEOHANGMAN-001" author="aajn88@gmail.com">
+		<comment>Creates User table</comment>
+		<createTable tableName="user" schemaName="geohangman"
+			remarks="The User main table">
+			<column name="id" type="varchar(20)" remarks="client id - primary key">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(200)" remarks="User's name" />
+			<column name="email" type="varchar(200)" remarks="User's email" />
+		</createTable>
+	</changeSet>
+         
+	<changeSet id="GEOHANGMAN-002" author="aajn88@gmail.com">
+		<comment>Users' friends</comment>
+		<createTable tableName="friends" schemaName="geohangman"
+			remarks="The Users' friends table">
+			<column name="main_user_id" type="varchar(20)" remarks="main user id - primary key">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="friend_id" type="varchar(20)" remarks="friend id - primary key">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+		</createTable>
+		
+		<addForeignKeyConstraint constraintName="main_user_friends_fk"
+			baseTableName="friends" baseColumnNames="main_user_id"
+			referencedTableName="user" referencedColumnNames="id"
+			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
+		
+		<addForeignKeyConstraint constraintName="friend_id_fk"
+			baseTableName="friends" baseColumnNames="friend_id"
+			referencedTableName="user" referencedColumnNames="id"
+			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
+		
+	</changeSet>
+
+</databaseChangeLog>

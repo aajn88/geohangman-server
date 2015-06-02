@@ -1,4 +1,4 @@
-package com.doers.geohangman.config;
+package com.doers.geohangman.constants;
 
 
 /**

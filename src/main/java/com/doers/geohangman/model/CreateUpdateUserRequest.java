@@ -1,18 +1,22 @@
 package com.doers.geohangman.model;
 
+import com.doers.geohangman.model.entities.User;
+
 /**
+ * Create or Update User request
+ * 
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
  */
 public class CreateUpdateUserRequest extends AbstractRequest {
 
 	/** User to be created/updated **/
-	private UserInfo user;
+	private User user;
 
 	/**
 	 * @return the user
 	 */
-	public UserInfo getUser() {
+	public User getUser() {
 		return user;
 	}
 
@@ -20,7 +24,7 @@ public class CreateUpdateUserRequest extends AbstractRequest {
 	 * @param user
 	 *            the user to set
 	 */
-	public void setUser(UserInfo user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.doers.geohangman.config.Messages;
+import com.doers.geohangman.constants.Messages;
 import com.doers.geohangman.model.AbstractRequest;
-import com.doers.geohangman.services.IValidationService;
+import com.doers.geohangman.services.api.IValidationService;
 
 /**
  * 

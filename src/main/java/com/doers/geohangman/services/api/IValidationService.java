@@ -1,4 +1,4 @@
-package com.doers.geohangman.services;
+package com.doers.geohangman.services.api;
 
 import com.doers.geohangman.model.AbstractRequest;
 
