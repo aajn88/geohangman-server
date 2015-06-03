@@ -9,7 +9,7 @@
 		<comment>Creates User table</comment>
 		<createTable tableName="geohangman_users" schemaName="geohangman"
 			remarks="The User main table">
-			<column name="id" type="varchar(20)" remarks="client id - primary key">
+			<column name="id" type="varchar(50)" remarks="client id - primary key">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="name" type="varchar(200)" remarks="User's name" />
@@ -21,10 +21,10 @@
 		<comment>Users' friends</comment>
 		<createTable tableName="users_friends" schemaName="geohangman"
 			remarks="The Users' friends table">
-			<column name="main_user_id" type="varchar(20)" remarks="main user id - primary key">
+			<column name="main_user_id" type="varchar(50)" remarks="main user id - primary key">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="friend_id" type="varchar(20)" remarks="friend id - primary key">
+			<column name="friend_id" type="varchar(50)" remarks="friend id - primary key">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 		</createTable>
@@ -48,13 +48,13 @@
 			<column name="id" type="integer" remarks="challenge id - primary key">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="challenger_id" type="varchar(20)" remarks="Challenger id">
+			<column name="challenger_id" type="varchar(50)" remarks="Challenger id">
 				<constraints nullable="false" />
 			</column>
-			<column name="opponent_id" type="varchar(20)" remarks="Opponent id">
+			<column name="opponent_id" type="varchar(50)" remarks="Opponent id">
 				<constraints nullable="false" />
 			</column>
-			<column name="word" type="varchar(20)" remarks="The word to be guessed">
+			<column name="word" type="varchar(50)" remarks="The word to be guessed">
 				<constraints nullable="false" />
 			</column>
 			<column name="lat" type="double precision" remarks="Map point lat">
