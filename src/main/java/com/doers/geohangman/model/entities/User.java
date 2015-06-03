@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.doers.geohangman.constants.ModelConstants;
+
 /**
  * 
  * This is User's basic info Entity
@@ -20,7 +22,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
-@Table(name = "user", schema = "geohangman")
+@Table(name = ModelConstants.USERS_TABLE, schema = ModelConstants.DEFAULT_SCHEMA)
 public class User {
 
 	/** User's Google Id (GeoHangman Id) **/
@@ -37,10 +39,10 @@ public class User {
 
 	/** User's friends **/
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "friends", schema = "geohangman",  joinColumns = {
-			@JoinColumn(name = "main_user_id")
+	@JoinTable(name = ModelConstants.FRIENDS_TABLE, schema = ModelConstants.DEFAULT_SCHEMA,  joinColumns = {
+			@JoinColumn(name = ModelConstants.FRIENDS_TABLE_MAIN_USER_ID)
 	}, inverseJoinColumns = {
-			@JoinColumn(name = "friend_id")
+			@JoinColumn(name = ModelConstants.FRIENDS_TABLE_FRIEND_ID)
 	})
 	private List<User> friends;
 

@@ -14,8 +14,9 @@ public interface IUserService {
 	 * Creates User
 	 * 
 	 * @param user the user to be created
+	 * @return User Id
 	 */
-	void createUser(User user);
+	String createUser(User user);
 	
 	/**
 	 * Finds a User by a given Id

@@ -68,12 +68,25 @@ public class ValidationService implements IValidationService {
 		
 	}
 	
+	/**
+	 * Returns coded Security Key
+	 * 
+	 * @return Coded Security Key
+	 * @throws NoSuchAlgorithmException
+	 */
 	private String getCodedSecurityKey() throws NoSuchAlgorithmException {
 		if(codedSecurityKey == null) {
 			codedSecurityKey = buildCodedSecurityKey();
 		}
 		return codedSecurityKey;
 	}
+	
+	/**
+	 * Builds Security key
+	 * 
+	 * @return Build security key
+	 * @throws NoSuchAlgorithmException
+	 */
 	private String buildCodedSecurityKey() throws NoSuchAlgorithmException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(secureKey).append(SEPARATOR).append(param1).append(SEPARATOR)

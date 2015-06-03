@@ -21,7 +21,7 @@ import com.doers.geohangman.services.api.IValidationService;
  *
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UsersController {
 	
 	/** Logger **/
@@ -52,10 +52,10 @@ public class UsersController {
 	 * @param request
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public void create(@RequestBody CreateUpdateUserRequest request) {
+	public String create(@RequestBody CreateUpdateUserRequest request) {
 		LOGGER.debug("Create user request [{}]", request.getUser());
 		validationService.authenticate(request);
-		userService.createUser(request.getUser());
+		return userService.createUser(request.getUser());
 	}
 	
 }

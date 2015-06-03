@@ -1,6 +1,9 @@
 package com.doers.geohangman.model;
 
 /**
+ * 
+ * Basic request properties
+ * 
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
  */

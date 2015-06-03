@@ -7,7 +7,7 @@
          
 	<changeSet id="GEOHANGMAN-001" author="aajn88@gmail.com">
 		<comment>Creates User table</comment>
-		<createTable tableName="user" schemaName="geohangman"
+		<createTable tableName="geohangman_users" schemaName="geohangman"
 			remarks="The User main table">
 			<column name="id" type="varchar(20)" remarks="client id - primary key">
 				<constraints primaryKey="true" nullable="false" />
@@ -19,7 +19,7 @@
          
 	<changeSet id="GEOHANGMAN-002" author="aajn88@gmail.com">
 		<comment>Users' friends</comment>
-		<createTable tableName="friends" schemaName="geohangman"
+		<createTable tableName="users_friends" schemaName="geohangman"
 			remarks="The Users' friends table">
 			<column name="main_user_id" type="varchar(20)" remarks="main user id - primary key">
 				<constraints primaryKey="true" nullable="false" />
@@ -30,13 +30,90 @@
 		</createTable>
 		
 		<addForeignKeyConstraint constraintName="main_user_friends_fk"
-			baseTableName="friends" baseColumnNames="main_user_id"
-			referencedTableName="user" referencedColumnNames="id"
+			baseTableName="users_friends" baseColumnNames="main_user_id"
+			referencedTableName="geohangman_users" referencedColumnNames="id"
 			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
 		
 		<addForeignKeyConstraint constraintName="friend_id_fk"
-			baseTableName="friends" baseColumnNames="friend_id"
-			referencedTableName="user" referencedColumnNames="id"
+			baseTableName="users_friends" baseColumnNames="friend_id"
+			referencedTableName="geohangman_users" referencedColumnNames="id"
+			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
+		
+	</changeSet>
+         
+	<changeSet id="GEOHANGMAN-003" author="aajn88@gmail.com">
+		<comment>Create GeoHangman Challenges table</comment>
+		<createTable tableName="geohangman_challenges" schemaName="geohangman"
+			remarks="The GeoHangman challenges">
+			<column name="id" type="integer" remarks="challenge id - primary key">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="challenger_id" type="varchar(20)" remarks="Challenger id">
+				<constraints nullable="false" />
+			</column>
+			<column name="opponent_id" type="varchar(20)" remarks="Opponent id">
+				<constraints nullable="false" />
+			</column>
+			<column name="word" type="varchar(20)" remarks="The word to be guessed">
+				<constraints nullable="false" />
+			</column>
+			<column name="lat" type="double precision" remarks="Map point lat">
+				<constraints nullable="false" />
+			</column>
+			<column name="lng" type="double precision" remarks="Map point lng">
+				<constraints nullable="false" />
+			</column>
+			<column name="zoom" type="double precision" remarks="Map point zoom">
+				<constraints nullable="false" />
+			</column>
+			<column name="played" type="boolean" remarks="If challenge was already played" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+			<column name="image_id" type="integer" remarks="Challenge image">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		
+		<addForeignKeyConstraint constraintName="challenger_id_fk"
+			baseTableName="geohangman_challenges" baseColumnNames="challenger_id"
+			referencedTableName="geohangman_users" referencedColumnNames="id"
+			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
+		
+		<addForeignKeyConstraint constraintName="opponent_id_fk"
+			baseTableName="geohangman_challenges" baseColumnNames="opponent_id"
+			referencedTableName="geohangman_users" referencedColumnNames="id"
+			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
+		
+	</changeSet>
+         
+	<changeSet id="GEOHANGMAN-004" author="aajn88@gmail.com">
+		<comment>Create challenge images table</comment>
+		<createTable tableName="challenges_images" schemaName="geohangman"
+			remarks="The challenges images">
+			<column name="id" type="integer" remarks="image id - primary key">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="challenge_id" type="integer" remarks="Challenge id">
+				<constraints nullable="false" />
+			</column>
+			<column name="image" type="bytea" remarks="image bytes">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<addForeignKeyConstraint constraintName="challenge_id_fk"
+			baseTableName="challenges_images" baseColumnNames="challenge_id"
+			referencedTableName="geohangman_challenges" referencedColumnNames="id"
+			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
+		
+	</changeSet>
+         
+	<changeSet id="GEOHANGMAN-005" author="aajn88@gmail.com">
+		<comment>Add imageId foreign key</comment>
+		
+		<addForeignKeyConstraint constraintName="image_id_fk"
+			baseTableName="geohangman_challenges" baseColumnNames="image_id"
+			referencedTableName="challenges_images" referencedColumnNames="id"
 			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
 		
 	</changeSet>

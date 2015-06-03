@@ -28,8 +28,9 @@ public class UserService implements IUserService {
 	 */
 	@Override
 	@Transactional
-	public void createUser(User user) {
-		userRepo.save(user);
+	public String createUser(User user) {
+		user = userRepo.save(user);
+		return user.getId();
 	}
 
 	/* (non-Javadoc)
