@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.doers.geohangman.constants.ModelConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
@@ -37,6 +38,7 @@ public class User {
 	private String email;
 
 	/** User's friends **/
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = ModelConstants.FRIENDS_TABLE, schema = ModelConstants.DEFAULT_SCHEMA,  joinColumns = {
 			@JoinColumn(name = ModelConstants.FRIENDS_TABLE_MAIN_USER_ID)
