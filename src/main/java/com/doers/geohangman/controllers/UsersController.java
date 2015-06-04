@@ -1,5 +1,7 @@
 package com.doers.geohangman.controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doers.geohangman.model.CreateUpdateFriendsRequest;
 import com.doers.geohangman.model.CreateUpdateUserRequest;
 import com.doers.geohangman.model.entities.User;
-import com.doers.geohangman.services.api.IUserService;
+import com.doers.geohangman.services.api.IUsersService;
 import com.doers.geohangman.services.api.IValidationService;
 
 /**
@@ -23,39 +26,65 @@ import com.doers.geohangman.services.api.IValidationService;
 @RestController
 @RequestMapping(value = "/users")
 public class UsersController {
-	
+
 	/** Logger **/
-	private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
-	
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UsersController.class);
+
 	/** The User Service **/
 	@Autowired
-	private IUserService userService;
-	
+	private IUsersService usersService;
+
 	/** The Validation Service **/
 	@Autowired
 	private IValidationService validationService;
-	
+
 	/**
 	 * This GET method requests a User given his {@code id}
 	 * 
-	 * @param id the User Id
+	 * @param id
+	 *            the User Id
 	 * @return the User or null if he does not exist
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable String id) {
-		LOGGER.debug("Get user [{}] has been requested", id);
-		return userService.findUserById(id);
+		LOGGER.debug("Get User [{}] has been requested", id);
+		return usersService.findUserById(id);
+	}
+
+	/**
+	 * Request method for User's friends.
+	 * 
+	 * Returns a List of Users given a User id
+	 * 
+	 * @param id
+	 *            The user Id
+	 * @return returns a list of Users representing the User's friends. If the
+	 *         User does not exist, returns null
+	 */
+	@RequestMapping(value = "/{id}/friends", method = RequestMethod.GET)
+	public List<User> getFriendsList(@PathVariable String id) {
+		LOGGER.debug("Friends list requested for User [{}]", id);
+		return usersService.findFriendsById(id);
 	}
 	
+	@RequestMapping(value = "/{id}/friends", method = RequestMethod.POST)
+	public String postFriendsList(@PathVariable String id, @RequestBody CreateUpdateFriendsRequest request) {
+		LOGGER.debug("Creatinf friends for User [{}]", id);
+		validationService.authenticate(request);
+		return usersService.createFriends(id, request.getFriends());
+	}
+
 	/**
 	 * This POST method creates a new User
+	 * 
 	 * @param request
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@RequestBody CreateUpdateUserRequest request) {
-		LOGGER.debug("Create user request [{}]", request.getUser());
+		LOGGER.debug("Create User request [{}]", request.getUser());
 		validationService.authenticate(request);
-		return userService.createUser(request.getUser());
+		return usersService.createUser(request.getUser());
 	}
-	
+
 }

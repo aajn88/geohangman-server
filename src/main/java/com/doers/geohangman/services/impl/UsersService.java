@@ -1,5 +1,7 @@
 package com.doers.geohangman.services.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.doers.geohangman.model.entities.User;
 import com.doers.geohangman.repositories.IUserRepository;
-import com.doers.geohangman.services.api.IUserService;
+import com.doers.geohangman.services.api.IUsersService;
 
 /**
  * 
- * UserInfo service implementation of {@link IUserService}
+ * UserInfo service implementation of {@link IUsersService}
  * 
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
  */
 @Service
-public class UserService implements IUserService {
+public class UsersService implements IUsersService {
 	
 	/** The UserInfo Repository **/
 	@Autowired
@@ -39,6 +41,25 @@ public class UserService implements IUserService {
 	@Override
 	public User findUserById(String id) {
 		return userRepo.findOne(id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.doers.geohangman.services.api.IUserService#findFriendsById(java.lang.String)
+	 */
+	@Override
+	public List<User> findFriendsById(String id) {
+		User user = findUserById(id);
+		return (user == null ? null : user.getFriends());
+	}
+
+	/* (non-Javadoc)
+	 * @see com.doers.geohangman.services.api.IUsersService#createFriends(java.lang.String, java.util.List)
+	 */
+	@Override
+	public String createFriends(String id, List<User> friends) {
+		User user = findUserById(id);
+		user.setFriends(friends);
+		return createUser(user);
 	}
 	
 }
