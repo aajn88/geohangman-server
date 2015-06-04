@@ -12,7 +12,9 @@
 			<column name="id" type="varchar(50)" remarks="client id - primary key">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="name" type="varchar(200)" remarks="User's name" />
+			<column name="name" type="varchar(200)" remarks="User's name" >
+				<constraints nullable="false" />
+			</column>
 			<column name="email" type="varchar(200)" remarks="User's email" />
 		</createTable>
 	</changeSet>

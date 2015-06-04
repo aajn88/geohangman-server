@@ -34,7 +34,6 @@ public class User {
 	private String name;
 
 	/** User's email **/
-	@NotNull
 	private String email;
 
 	/** User's friends **/
