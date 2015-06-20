@@ -1,74 +1,31 @@
-package com.doers.geohangman.model.entities;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import com.doers.geohangman.constants.ModelConstants;
+package com.doers.geohangman.model;
 
 /**
- * The Geohangman challenge. This class stores the challenger and the opponent
- * as well as the word to be guessed, map point (including zoom) and the image
+ * 
+ * Create Challenge Request
  * 
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
  */
-@Entity
-@Table(name = ModelConstants.CHALLENGES_TABLE, schema = ModelConstants.DEFAULT_SCHEMA)
-public class Challenge {
-
-	/** Challenge Id **/
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private Integer id;
+public class CreateChallengeRequest extends AbstractRequest {
 
 	/** Challenger Id **/
-	@NotNull
 	private String challengerId;
 
 	/** Opponent Id **/
-	@NotNull
 	private String opponentId;
 
 	/** The word to be guessed **/
-	@NotNull
 	private String word;
 
 	/** Map point Latitude **/
-	@NotNull
 	private Double lat;
 
 	/** Map point Longitude **/
-	@NotNull
 	private Double lng;
 
 	/** Map point zoom **/
-	@NotNull
 	private Float zoom;
-
-	/** Indicates if challenge has been already played **/
-	private boolean played;
-
-	/** The image Id **/
-	private Integer imageId;
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the challengerId
@@ -158,36 +115,6 @@ public class Challenge {
 	 */
 	public void setZoom(Float zoom) {
 		this.zoom = zoom;
-	}
-
-	/**
-	 * @return the played
-	 */
-	public boolean getPlayed() {
-		return played;
-	}
-
-	/**
-	 * @param played
-	 *            the played to set
-	 */
-	public void setPlayed(boolean played) {
-		this.played = played;
-	}
-
-	/**
-	 * @return the imageId
-	 */
-	public Integer getImageId() {
-		return imageId;
-	}
-
-	/**
-	 * @param imageId
-	 *            the imageId to set
-	 */
-	public void setImageId(Integer imageId) {
-		this.imageId = imageId;
 	}
 
 }

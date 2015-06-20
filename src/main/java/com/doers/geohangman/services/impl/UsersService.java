@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.doers.geohangman.model.entities.User;
 import com.doers.geohangman.repositories.IUserRepository;
 import com.doers.geohangman.services.api.IUsersService;
+import com.doers.geohangman.utils.UserUtils;
 
 /**
  * 
@@ -20,31 +21,61 @@ import com.doers.geohangman.services.api.IUsersService;
  */
 @Service
 public class UsersService implements IUsersService {
-	
+
 	/** The UserInfo Repository **/
 	@Autowired
 	private IUserRepository userRepo;
 
-	/* (non-Javadoc)
-	 * @see com.doers.geohangman.services.api.IUserService#createUser(com.doers.geohangman.model.entities.UserInfo)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.doers.geohangman.services.api.IUserService#createUser(com.doers.
+	 * geohangman.model.entities.UserInfo)
 	 */
 	@Override
 	@Transactional
 	public String createUser(User user) {
+		completeUserFriends(user);
 		user = userRepo.save(user);
 		return user.getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.doers.geohangman.services.api.IUserService#findUserById(java.lang.String)
+	/**
+	 * This method completes user's friends information. Therefore, the
+	 * information will not be override with wrong data
+	 * 
+	 * @param user
+	 */
+	private void completeUserFriends(User user) {
+		List<User> friends = user.getFriends();
+		if(friends == null) {
+			return;
+		}
+		
+		for (User friend : friends) {
+			User realUser = findUserById(friend.getId());
+			UserUtils.copyUserInformation(realUser, friend, Boolean.FALSE);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.doers.geohangman.services.api.IUserService#findUserById(java.lang
+	 * .String)
 	 */
 	@Override
 	public User findUserById(String id) {
 		return userRepo.findOne(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.doers.geohangman.services.api.IUserService#findFriendsById(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.doers.geohangman.services.api.IUserService#findFriendsById(java.lang
+	 * .String)
 	 */
 	@Override
 	public List<User> findFriendsById(String id) {
@@ -52,8 +83,24 @@ public class UsersService implements IUsersService {
 		return (user == null ? null : user.getFriends());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.doers.geohangman.services.api.IUsersService#createFriends(java.lang.String, java.util.List)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.doers.geohangman.services.api.IUsersService#findRegisteredFriendsById
+	 * (java.lang.String)
+	 */
+	@Override
+	public List<User> findRegisteredFriendsById(String id) {
+		return userRepo.findRegisteredFriendsById(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.doers.geohangman.services.api.IUsersService#createFriends(java.lang
+	 * .String, java.util.List)
 	 */
 	@Override
 	public String createFriends(String id, List<User> friends) {
@@ -61,5 +108,5 @@ public class UsersService implements IUsersService {
 		user.setFriends(friends);
 		return createUser(user);
 	}
-	
+
 }

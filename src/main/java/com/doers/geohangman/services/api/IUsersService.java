@@ -37,6 +37,14 @@ public interface IUsersService {
 	List<User> findFriendsById(String id);
 	
 	/**
+	 * Returns all friends registered in Geohangman
+	 * 
+	 * @param id The User Id
+	 * @return List of registered friends
+	 */
+	List<User> findRegisteredFriendsById(String id);
+	
+	/**
 	 * This method creates User's friends
 	 * 
 	 * @param id Id of the User's friends

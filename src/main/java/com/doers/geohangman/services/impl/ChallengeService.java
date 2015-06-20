@@ -3,6 +3,8 @@ package com.doers.geohangman.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.doers.geohangman.model.CreateChallengeImageRequest;
+import com.doers.geohangman.model.CreateChallengeRequest;
 import com.doers.geohangman.model.entities.Challenge;
 import com.doers.geohangman.model.entities.ChallengeImage;
 import com.doers.geohangman.repositories.IChallengeImageRepository;
@@ -36,7 +38,14 @@ public class ChallengeService implements IChallengeService {
 	 * .doers.geohangman.model.entities.Challenge)
 	 */
 	@Override
-	public Integer createChallenge(Challenge challenge) {
+	public Integer createChallenge(CreateChallengeRequest request) {
+		Challenge challenge = new Challenge();
+		challenge.setChallengerId(request.getChallengerId());
+		challenge.setOpponentId(request.getOpponentId());
+		challenge.setWord(request.getWord());
+		challenge.setLat(request.getLat());
+		challenge.setLng(request.getLng());
+		challenge.setZoom(request.getZoom());
 		challenge = challengeRepo.save(challenge);
 		return challenge.getId();
 	}
@@ -61,9 +70,22 @@ public class ChallengeService implements IChallengeService {
 	 * (com.doers.geohangman.model.entities.ChallengeImage)
 	 */
 	@Override
-	public Integer createChallengeImage(ChallengeImage image) {
+	public Integer createChallengeImage(CreateChallengeImageRequest request) {
+		
+		// TODO: Validate all fields
+		
+		Challenge challenge = findChallengeById(request.getChallengeId());
+		
+		ChallengeImage image = new ChallengeImage();
+		image.setChallengeId(request.getChallengeId());
+		image.setImage(request.getImageBytes());
 		image = imageRepo.save(image);
-		return image.getId();
+		
+		Integer imageId = image.getId();
+		challenge.setImageId(imageId);
+		challengeRepo.save(challenge);
+		
+		return imageId;
 	}
 
 	/*
@@ -76,6 +98,20 @@ public class ChallengeService implements IChallengeService {
 	@Override
 	public ChallengeImage findChallengeImageById(Integer id) {
 		return imageRepo.findOne(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.doers.geohangman.services.api.IChallengeService#
+	 * findChallengeImageByChallengeId(java.lang.Integer)
+	 */
+	@Override
+	public ChallengeImage findChallengeImageByChallengeId(Integer challengeId) {
+		Challenge challenge = findChallengeById(challengeId);
+
+		return (challenge == null || challenge.getImageId() == null ? null
+				: findChallengeImageById(challenge.getImageId()));
 	}
 
 }

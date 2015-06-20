@@ -68,9 +68,21 @@ public class UsersController {
 		return usersService.findFriendsById(id);
 	}
 	
+	/**
+	 * Request for registered friends of a User
+	 * 
+	 * @param id The user Id
+	 * @return List of User's friends that are registered in Geohangman
+	 */
+	@RequestMapping(value = "/{id}/registered-friends", method = RequestMethod.GET)
+	public List<User> getRegisteredFriendsList(@PathVariable String id) {
+		LOGGER.debug("Registered friends list requested for User [{}]", id);
+		return usersService.findRegisteredFriendsById(id);
+	}
+	
 	@RequestMapping(value = "/{id}/friends", method = RequestMethod.POST)
 	public String postFriendsList(@PathVariable String id, @RequestBody CreateUpdateFriendsRequest request) {
-		LOGGER.debug("Creatinf friends for User [{}]", id);
+		LOGGER.debug("Creating friends for User [{}]", id);
 		validationService.authenticate(request);
 		return usersService.createFriends(id, request.getFriends());
 	}
@@ -81,7 +93,7 @@ public class UsersController {
 	 * @param request
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String create(@RequestBody CreateUpdateUserRequest request) {
+	public String createUser(@RequestBody CreateUpdateUserRequest request) {
 		LOGGER.debug("Create User request [{}]", request.getUser());
 		validationService.authenticate(request);
 		return usersService.createUser(request.getUser());
