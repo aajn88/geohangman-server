@@ -1,10 +1,12 @@
 package com.doers.geohangman.services.impl;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doers.geohangman.model.CreateChallengeImageRequest;
 import com.doers.geohangman.model.CreateChallengeRequest;
+import com.doers.geohangman.model.GetChallengeImageResponse;
 import com.doers.geohangman.model.entities.Challenge;
 import com.doers.geohangman.model.entities.ChallengeImage;
 import com.doers.geohangman.repositories.IChallengeImageRepository;
@@ -78,7 +80,7 @@ public class ChallengeService implements IChallengeService {
 		
 		ChallengeImage image = new ChallengeImage();
 		image.setChallengeId(request.getChallengeId());
-		image.setImage(request.getImageBytes());
+		image.setImage(request.getImageBytes().getBytes());
 		image = imageRepo.save(image);
 		
 		Integer imageId = image.getId();
@@ -107,11 +109,19 @@ public class ChallengeService implements IChallengeService {
 	 * findChallengeImageByChallengeId(java.lang.Integer)
 	 */
 	@Override
-	public ChallengeImage findChallengeImageByChallengeId(Integer challengeId) {
+	public GetChallengeImageResponse findChallengeImageByChallengeId(Integer challengeId) {
 		Challenge challenge = findChallengeById(challengeId);
+		
+		GetChallengeImageResponse response = null;
+		
+		if(challenge != null) {
+			response = new GetChallengeImageResponse();
+			ChallengeImage image = findChallengeImageById(challenge.getImageId());
+			response.setImageId(image.getId());
+			response.setImageBytes(Base64.encodeBase64String(image.getImage()));
+		}
 
-		return (challenge == null || challenge.getImageId() == null ? null
-				: findChallengeImageById(challenge.getImageId()));
+		return response;
 	}
 
 }

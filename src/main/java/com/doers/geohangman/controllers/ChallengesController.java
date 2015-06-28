@@ -1,5 +1,7 @@
 package com.doers.geohangman.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,8 +13,8 @@ import com.doers.geohangman.model.CreateChallengeImageRequest;
 import com.doers.geohangman.model.CreateChallengeImageResponse;
 import com.doers.geohangman.model.CreateChallengeRequest;
 import com.doers.geohangman.model.CreateChallengeResponse;
+import com.doers.geohangman.model.GetChallengeImageResponse;
 import com.doers.geohangman.model.entities.Challenge;
-import com.doers.geohangman.model.entities.ChallengeImage;
 import com.doers.geohangman.services.api.IChallengeService;
 
 /**
@@ -25,6 +27,9 @@ import com.doers.geohangman.services.api.IChallengeService;
 @RestController
 @RequestMapping(value = "/challenges")
 public class ChallengesController {
+	
+	/** LOGGER **/
+	private static final Logger LOGGER = LoggerFactory.getLogger(ChallengesController.class);
 
 	/** The Challenge Service **/
 	@Autowired
@@ -50,6 +55,7 @@ public class ChallengesController {
 	@RequestMapping(method = RequestMethod.POST)
 	public CreateChallengeResponse createChallenge(
 			@RequestBody CreateChallengeRequest request) {
+		LOGGER.debug("Create challenge request received");
 		Integer id = challengeService.createChallenge(request);
 		CreateChallengeResponse response = new CreateChallengeResponse();
 		response.setChallengeId(id);
@@ -64,8 +70,8 @@ public class ChallengesController {
 	 *            The challenge Id
 	 * @return Challenge Image if exists, otherwise returns null
 	 */
-	@RequestMapping(value = "/{id}/image", method = RequestMethod.GET)
-	public ChallengeImage getChallengeImageByChallengeId(
+	@RequestMapping(value = "/{challengeId}/image", method = RequestMethod.GET)
+	public GetChallengeImageResponse getChallengeImageByChallengeId(
 			@PathVariable Integer challengeId) {
 		return challengeService.findChallengeImageByChallengeId(challengeId);
 	}
@@ -82,6 +88,7 @@ public class ChallengesController {
 	@RequestMapping(value = "/images", method = RequestMethod.POST)
 	public CreateChallengeImageResponse createChallengeImage(
 			@RequestBody CreateChallengeImageRequest request) {
+		LOGGER.info("Create image challenge for challengeId = {}", request.getChallengeId());
 		Integer imageId = challengeService.createChallengeImage(request);
 		CreateChallengeImageResponse response = new CreateChallengeImageResponse();
 		response.setChallengeImageId(imageId);

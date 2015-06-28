@@ -22,7 +22,7 @@ public class ChallengeImage {
 
 	/** The image Id **/
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Integer id;
 
 	/** The associated challenge **/

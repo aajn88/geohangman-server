@@ -2,6 +2,7 @@ package com.doers.geohangman.services.api;
 
 import com.doers.geohangman.model.CreateChallengeImageRequest;
 import com.doers.geohangman.model.CreateChallengeRequest;
+import com.doers.geohangman.model.GetChallengeImageResponse;
 import com.doers.geohangman.model.entities.Challenge;
 import com.doers.geohangman.model.entities.ChallengeImage;
 
@@ -37,6 +38,7 @@ public interface IChallengeService {
 	 * 
 	 * @param request
 	 *            with all image information
+	 * 
 	 * @return Challenge Image Id
 	 */
 	Integer createChallengeImage(CreateChallengeImageRequest request);
@@ -55,8 +57,8 @@ public interface IChallengeService {
 	 * 
 	 * @param challengeId
 	 *            The Challenge Id
-	 * @return ChallengeImage if exists, otherwise returns null
+	 * @return GetChallengeImageResponse if exists, otherwise returns null
 	 */
-	ChallengeImage findChallengeImageByChallengeId(Integer challengeId);
+	GetChallengeImageResponse findChallengeImageByChallengeId(Integer challengeId);
 
 }
