@@ -10,6 +10,18 @@ public final class Constants {
 
 	/** GeoHangman main package **/
 	public static final String GEOHANGMAN_MAIN_PACKAGE = "com.doers.geohangman";
+	
+	/** The Geohangman Bucket on AWS **/
+	public static final String AWS_GEOHANGMAN_BUCKET = "geohangman";
+	
+	/** The AWS Access Key environment variable **/
+	public static final String AWS_ACCESS_KEY_ID = "AWS_ACCESS_KEY_ID";
+	
+	/** The AWS Secret Access Key environment variable **/
+	public static final String AWS_SECRET_ACCESS_KEY = "AWS_SECRET_ACCESS_KEY";
+	
+	/** The AWS URL Prefix **/
+	public static final String AWS_URL_PREFIX = "https://s3-us-west-2.amazonaws.com/";
 
 	/** Entities Package **/
 	public static final String ENTITIES_PACKAGE = "com.doers.geohangman.model.entities";

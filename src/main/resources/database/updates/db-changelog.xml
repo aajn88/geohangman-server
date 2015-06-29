@@ -119,5 +119,21 @@
 			baseTableSchemaName="geohangman" referencedTableSchemaName="geohangman" />
 		
 	</changeSet>
+	
+	<changeSet id="GEOHANGMAN-006" author="aajn88@gmail.com">
+		<comment>Adding ImageUrl to challenges_images table</comment>
+		
+		<addColumn tableName="challenges_images" schemaName="geohangman">
+			<column name="image_url" type="varchar(500)" remarks="This field will store the image Url">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="GEOHANGMAN-007" author="aajn88@gmail.com">
+		<comment>Drop ImageBytes field because now is in the cloud</comment>
+		
+		<dropColumn tableName="challenges_images" schemaName="geohangman" columnName="image"/>
+	</changeSet>
 
 </databaseChangeLog>

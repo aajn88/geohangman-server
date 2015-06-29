@@ -31,7 +31,7 @@ public class ChallengeImage {
 
 	/** The image **/
 	@NotNull
-	private byte[] image;
+	private String imageUrl;
 
 	/**
 	 * @return the id
@@ -66,16 +66,16 @@ public class ChallengeImage {
 	/**
 	 * @return the image
 	 */
-	public byte[] getImage() {
-		return image;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 	/**
 	 * @param image
 	 *            the image to set
 	 */
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setImageUrl(String image) {
+		this.imageUrl = image;
 	}
 
 }

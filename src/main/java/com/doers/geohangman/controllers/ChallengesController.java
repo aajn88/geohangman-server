@@ -1,5 +1,7 @@
 package com.doers.geohangman.controllers;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,10 @@ import com.doers.geohangman.services.api.IChallengeService;
 @RestController
 @RequestMapping(value = "/challenges")
 public class ChallengesController {
-	
+
 	/** LOGGER **/
-	private static final Logger LOGGER = LoggerFactory.getLogger(ChallengesController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ChallengesController.class);
 
 	/** The Challenge Service **/
 	@Autowired
@@ -84,14 +87,18 @@ public class ChallengesController {
 	 *            with all challenge image information
 	 * @return CreateChallengeImageResponse with all created image information
 	 *         as its Id
+	 * @throws IOException
 	 */
 	@RequestMapping(value = "/images", method = RequestMethod.POST)
 	public CreateChallengeImageResponse createChallengeImage(
-			@RequestBody CreateChallengeImageRequest request) {
-		LOGGER.info("Create image challenge for challengeId = {}", request.getChallengeId());
-		Integer imageId = challengeService.createChallengeImage(request);
+			@RequestBody CreateChallengeImageRequest request) throws IOException {
+		LOGGER.info("Create image challenge for challengeId = {}",
+				request.getChallengeId());
+		String imageUrl = challengeService.createChallengeImage(request);
 		CreateChallengeImageResponse response = new CreateChallengeImageResponse();
-		response.setChallengeImageId(imageId);
+		response.setImageUrl(imageUrl);
+		
+		LOGGER.info("Created Image Url = {}", imageUrl);
 
 		return response;
 	}

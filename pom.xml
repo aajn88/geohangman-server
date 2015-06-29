@@ -66,6 +66,14 @@
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
 
+		<!-- Amazon AWS Dependencies -->
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.10.2</version>
+		</dependency>
+
 		<!-- Spring Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,5 +1,7 @@
 package com.doers.geohangman.services.api;
 
+import java.io.IOException;
+
 import com.doers.geohangman.model.CreateChallengeImageRequest;
 import com.doers.geohangman.model.CreateChallengeRequest;
 import com.doers.geohangman.model.GetChallengeImageResponse;
@@ -39,9 +41,10 @@ public interface IChallengeService {
 	 * @param request
 	 *            with all image information
 	 * 
-	 * @return Challenge Image Id
+	 * @return Picture URL in AWS Servers
+	 * @throws IOException 
 	 */
-	Integer createChallengeImage(CreateChallengeImageRequest request);
+	String createChallengeImage(CreateChallengeImageRequest request) throws IOException;
 
 	/**
 	 * Finds a challenge image by its Id
