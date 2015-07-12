@@ -1,5 +1,6 @@
 package com.doers.geohangman.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.doers.geohangman.model.entities.User;
 import com.doers.geohangman.repositories.IUserRepository;
 import com.doers.geohangman.services.api.IUsersService;
-import com.doers.geohangman.utils.UserUtils;
 
 /**
  * 
@@ -35,32 +35,17 @@ public class UsersService implements IUsersService {
 	 */
 	@Override
 	@Transactional
-	public String createUser(User user) {
-		completeUserFriends(user);
+	public User createUser(User user) {
+		// completeUserFriends(user);
 		User foundUser = findUserById(user.getId());
-		if(foundUser != null) {
-			user.setToken(foundUser.getToken());
+		if (foundUser != null) {
+			if (user.getEmail() != null) {
+				foundUser.setEmail(user.getEmail());
+			}
+			foundUser.setName(user.getName());
+			user = foundUser;
 		}
-		user = userRepo.save(user);
-		return user.getId();
-	}
-
-	/**
-	 * This method completes user's friends information. Therefore, the
-	 * information will not be override with wrong data
-	 * 
-	 * @param user
-	 */
-	private void completeUserFriends(User user) {
-		List<User> friends = user.getFriends();
-		if (friends == null) {
-			return;
-		}
-
-		for (User friend : friends) {
-			User realUser = findUserById(friend.getId());
-			UserUtils.copyUserInformation(realUser, friend, Boolean.FALSE);
-		}
+		return userRepo.save(user);
 	}
 
 	/*
@@ -111,8 +96,15 @@ public class UsersService implements IUsersService {
 	public String createFriends(String id, List<User> friends) {
 		User user = findUserById(id);
 		Validate.notNull(user, "The User [{}] does not exist", id);
-		user.setFriends(friends);
-		return createUser(user);
+
+		List<User> processedUser = new ArrayList<User>();
+		for (User friend : friends) {
+			processedUser.add(createUser(friend));
+		}
+		user.setFriends(processedUser);
+
+		user = userRepo.save(user);
+		return user.getId();
 	}
 
 	/*
@@ -127,7 +119,9 @@ public class UsersService implements IUsersService {
 		User user = findUserById(id);
 		Validate.notNull(user, "The User [" + id + "] does not exist");
 		user.setToken(token);
-		return createUser(user);
+		user = userRepo.save(user);
+
+		return (user != null ? user.getId() : null);
 	}
 
 }

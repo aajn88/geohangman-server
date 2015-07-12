@@ -103,7 +103,9 @@ public class UsersController {
 	public String createUser(@RequestBody CreateUpdateUserRequest request) {
 		LOGGER.debug("Create User request [{}]", request.getUser());
 		validationService.authenticate(request);
-		return usersService.createUser(request.getUser());
+		User user = usersService.createUser(request.getUser());
+		
+		return (user != null ? user.getId() : null);
 	}
 	
 	/**
