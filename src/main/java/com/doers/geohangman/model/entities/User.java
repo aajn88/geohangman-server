@@ -43,7 +43,7 @@ public class User {
 
 	/** User's friends **/
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = ModelConstants.FRIENDS_TABLE, schema = ModelConstants.DEFAULT_SCHEMA, joinColumns = { @JoinColumn(name = ModelConstants.FRIENDS_TABLE_MAIN_USER_ID) }, inverseJoinColumns = { @JoinColumn(name = ModelConstants.FRIENDS_TABLE_FRIEND_ID) })
 	private List<User> friends;
 
