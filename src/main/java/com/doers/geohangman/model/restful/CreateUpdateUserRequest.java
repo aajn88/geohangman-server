@@ -1,4 +1,4 @@
-package com.doers.geohangman.model;
+package com.doers.geohangman.model.restful;
 
 import com.doers.geohangman.model.entities.User;
 

@@ -135,5 +135,15 @@
 		
 		<dropColumn tableName="challenges_images" schemaName="geohangman" columnName="image"/>
 	</changeSet>
+	
+	<changeSet id="GEOHANGMAN-008" author="aajn88@gmail.com">
+		<comment>Adding GCM token for users</comment>
+		
+		<addColumn tableName="geohangman_users" schemaName="geohangman">
+			<column name="token" type="varchar(500)" remarks="This field will store the GCM token">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
 
 </databaseChangeLog>

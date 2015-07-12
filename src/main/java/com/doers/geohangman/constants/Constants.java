@@ -49,6 +49,9 @@ public final class Constants {
 
 	/** Datadase System Env. variable **/
 	public static final String DATABASE_URL_ENV_VAR = "DATABASE_URL";
+	
+	/** App ApiKey System Env. variable **/
+	public static final String APP_API_KEY_ENV_VAR = "API_KEY";
 
 	/**
 	 * Privat4e default constructor

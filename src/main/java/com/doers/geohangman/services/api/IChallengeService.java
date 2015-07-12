@@ -2,11 +2,11 @@ package com.doers.geohangman.services.api;
 
 import java.io.IOException;
 
-import com.doers.geohangman.model.CreateChallengeImageRequest;
-import com.doers.geohangman.model.CreateChallengeRequest;
-import com.doers.geohangman.model.GetChallengeImageResponse;
 import com.doers.geohangman.model.entities.Challenge;
 import com.doers.geohangman.model.entities.ChallengeImage;
+import com.doers.geohangman.model.restful.CreateChallengeImageRequest;
+import com.doers.geohangman.model.restful.CreateChallengeRequest;
+import com.doers.geohangman.model.restful.GetChallengeImageResponse;
 
 /**
  * 

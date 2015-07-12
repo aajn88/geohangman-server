@@ -37,14 +37,14 @@ public class User {
 	/** User's email **/
 	private String email;
 
+	/** User's GCM Token **/
+	@JsonIgnore
+	private String token;
+
 	/** User's friends **/
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = ModelConstants.FRIENDS_TABLE, schema = ModelConstants.DEFAULT_SCHEMA,  joinColumns = {
-			@JoinColumn(name = ModelConstants.FRIENDS_TABLE_MAIN_USER_ID)
-	}, inverseJoinColumns = {
-			@JoinColumn(name = ModelConstants.FRIENDS_TABLE_FRIEND_ID)
-	})
+	@JoinTable(name = ModelConstants.FRIENDS_TABLE, schema = ModelConstants.DEFAULT_SCHEMA, joinColumns = { @JoinColumn(name = ModelConstants.FRIENDS_TABLE_MAIN_USER_ID) }, inverseJoinColumns = { @JoinColumn(name = ModelConstants.FRIENDS_TABLE_FRIEND_ID) })
 	private List<User> friends;
 
 	/**
@@ -105,6 +105,21 @@ public class User {
 	 */
 	public void setFriends(List<User> friends) {
 		this.friends = friends;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token
+	 *            the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	/*

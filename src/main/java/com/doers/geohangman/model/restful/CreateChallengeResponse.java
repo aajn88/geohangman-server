@@ -1,4 +1,4 @@
-package com.doers.geohangman.model;
+package com.doers.geohangman.model.restful;
 
 /**
  * This class represents the CreateChallenge service response

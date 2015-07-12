@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doers.geohangman.model.CreateChallengeImageRequest;
-import com.doers.geohangman.model.CreateChallengeImageResponse;
-import com.doers.geohangman.model.CreateChallengeRequest;
-import com.doers.geohangman.model.CreateChallengeResponse;
-import com.doers.geohangman.model.GetChallengeImageResponse;
 import com.doers.geohangman.model.entities.Challenge;
+import com.doers.geohangman.model.restful.CreateChallengeImageRequest;
+import com.doers.geohangman.model.restful.CreateChallengeImageResponse;
+import com.doers.geohangman.model.restful.CreateChallengeRequest;
+import com.doers.geohangman.model.restful.CreateChallengeResponse;
+import com.doers.geohangman.model.restful.GetChallengeImageResponse;
 import com.doers.geohangman.services.api.IChallengeService;
 
 /**

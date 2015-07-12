@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.doers.geohangman.constants.Messages;
-import com.doers.geohangman.model.AbstractRequest;
+import com.doers.geohangman.model.restful.AbstractRequest;
 import com.doers.geohangman.services.api.IValidationService;
 
 /**

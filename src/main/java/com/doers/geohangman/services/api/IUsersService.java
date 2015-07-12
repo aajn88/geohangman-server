@@ -53,4 +53,13 @@ public interface IUsersService {
 	 */
 	String createFriends(String id, List<User> friends);
 	
+	/**
+	 * This method creates/updates User's token
+	 * 
+	 * @param id User Id
+	 * @param token Token to be updated
+	 * @return User Id if succeeded, otherwise returns null
+	 */
+	String updateUsersToken(String id, String token);
+	
 }

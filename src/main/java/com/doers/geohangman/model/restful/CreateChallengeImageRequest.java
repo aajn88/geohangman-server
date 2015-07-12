@@ -1,4 +1,4 @@
-package com.doers.geohangman.model;
+package com.doers.geohangman.model.restful;
 
 /**
  * Create Challenge Image Request that will store challenge Image information as

@@ -1,6 +1,6 @@
 package com.doers.geohangman.services.api;
 
-import com.doers.geohangman.model.AbstractRequest;
+import com.doers.geohangman.model.restful.AbstractRequest;
 
 /**
  * Interface for Validation Service

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doers.geohangman.model.CreateUpdateFriendsRequest;
-import com.doers.geohangman.model.CreateUpdateUserRequest;
 import com.doers.geohangman.model.entities.User;
+import com.doers.geohangman.model.restful.CreateUpdateFriendsRequest;
+import com.doers.geohangman.model.restful.CreateUpdateUserRequest;
 import com.doers.geohangman.services.api.IUsersService;
 import com.doers.geohangman.services.api.IValidationService;
 
@@ -80,6 +80,13 @@ public class UsersController {
 		return usersService.findRegisteredFriendsById(id);
 	}
 	
+	/**
+	 * Sets friends of a given user
+	 * 
+	 * @param id User ID
+	 * @param request Request that contains User's friends
+	 * @return User's id if process was successful, otherwise, returns null
+	 */
 	@RequestMapping(value = "/{id}/friends", method = RequestMethod.POST)
 	public String postFriendsList(@PathVariable String id, @RequestBody CreateUpdateFriendsRequest request) {
 		LOGGER.debug("Creating friends for User [{}]", id);
@@ -97,6 +104,19 @@ public class UsersController {
 		LOGGER.debug("Create User request [{}]", request.getUser());
 		validationService.authenticate(request);
 		return usersService.createUser(request.getUser());
+	}
+	
+	/**
+	 * This method creates/updates a User's token
+	 * 
+	 * @param id User Id
+	 * @param token token to be created
+	 * @return Returns the user Id if succeeded, otherwise returns null
+	 */
+	@RequestMapping(value = "/{id}/token/{token}", method = RequestMethod.POST)
+	public String createTokenForUser(@PathVariable String id, @PathVariable String token) {
+		LOGGER.debug("Update token for User [id = {}, token = {}]", id, token);
+		return usersService.updateUsersToken(id, token);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.doers.geohangman.model;
+package com.doers.geohangman.model.restful;
 
 /**
  * Create Challenge Image Response that will return Create Challenge Image

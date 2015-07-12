@@ -40,13 +40,13 @@ public final class UserUtils {
 	public static void copyUserInformation(User from, User to,
 			boolean copyFriends) {
 		if (from == null || to == null) {
-			throw new IllegalArgumentException(
-					"Neither user from and user to could be null");
+			return;
 		}
 
 		to.setId(from.getId());
 		to.setName(from.getName());
 		to.setEmail(from.getEmail());
+		to.setToken(from.getToken());
 		if (copyFriends) {
 			to.setFriends(from.getFriends());
 		}
