@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.doers.geohangman.model.entities.Challenge;
 import com.doers.geohangman.model.entities.ChallengeImage;
-import com.doers.geohangman.model.restful.CreateChallengeImageRequest;
 import com.doers.geohangman.model.restful.CreateChallengeRequest;
 import com.doers.geohangman.model.restful.GetChallengeImageResponse;
 
@@ -38,13 +37,16 @@ public interface IChallengeService {
 	/**
 	 * This method creates the challenge Image and return its Id
 	 * 
-	 * @param request
-	 *            with all image information
+	 * @param challengeId
+	 *            The challenge Id
+	 * @param picBytes
+	 *            The pic Bytes
 	 * 
 	 * @return Picture URL in AWS Servers
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	String createChallengeImage(CreateChallengeImageRequest request) throws IOException;
+	String createChallengeImage(int challengeId, byte[] picBytes)
+			throws IOException;
 
 	/**
 	 * Finds a challenge image by its Id
@@ -62,6 +64,7 @@ public interface IChallengeService {
 	 *            The Challenge Id
 	 * @return GetChallengeImageResponse if exists, otherwise returns null
 	 */
-	GetChallengeImageResponse findChallengeImageByChallengeId(Integer challengeId);
+	GetChallengeImageResponse findChallengeImageByChallengeId(
+			Integer challengeId);
 
 }

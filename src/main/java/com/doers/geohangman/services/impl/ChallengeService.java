@@ -2,7 +2,6 @@ package com.doers.geohangman.services.impl;
 
 import java.io.IOException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +13,8 @@ import com.doers.geohangman.model.entities.Challenge;
 import com.doers.geohangman.model.entities.ChallengeImage;
 import com.doers.geohangman.model.entities.User;
 import com.doers.geohangman.model.restful.BasicGcmRequest;
-import com.doers.geohangman.model.restful.CreateChallengeImageRequest;
-import com.doers.geohangman.model.restful.CreateChallengeRequest;
 import com.doers.geohangman.model.restful.BasicGcmResponse;
+import com.doers.geohangman.model.restful.CreateChallengeRequest;
 import com.doers.geohangman.model.restful.GetChallengeImageResponse;
 import com.doers.geohangman.model.restful.Notification;
 import com.doers.geohangman.repositories.IChallengeImageRepository;
@@ -116,17 +114,17 @@ public class ChallengeService implements IChallengeService {
 	 * (com.doers.geohangman.model.entities.ChallengeImage)
 	 */
 	@Override
-	public String createChallengeImage(CreateChallengeImageRequest request)
+	public String createChallengeImage(int challengeId, byte[] picBytes)
 			throws IOException {
 
 		// TODO: Validate all fields
 
-		Challenge challenge = findChallengeById(request.getChallengeId());
+		Challenge challenge = findChallengeById(challengeId);
 
 		Validate.notNull(challenge,
 				"Challenge has not been found. The challenge does not exist");
 
-		String imageUrl = uploadPic(request);
+		String imageUrl = uploadPic(picBytes);
 
 		ChallengeImage challengeImage = new ChallengeImage();
 		challengeImage.setChallengeId(challenge.getId());
@@ -195,9 +193,9 @@ public class ChallengeService implements IChallengeService {
 	 * @return The AWS URL
 	 * @throws IOException
 	 */
-	private String uploadPic(CreateChallengeImageRequest request)
+	private String uploadPic(byte[] picBytes)
 			throws IOException {
-		String fileName = storeImageInServer(request);
+		String fileName = storeImageInServer(picBytes);
 		return uploadFile(fileName, Boolean.TRUE);
 	}
 
@@ -230,11 +228,10 @@ public class ChallengeService implements IChallengeService {
 	 * @return File name
 	 * @throws IOException
 	 */
-	private String storeImageInServer(CreateChallengeImageRequest request)
+	private String storeImageInServer(byte[] picBytes)
 			throws IOException {
-		byte[] decodedImage = Base64.decodeBase64(request.getImageBytes());
 		String fileName = StorageUtils.generateFileName();
-		StorageUtils.storeFile(fileName, JPG_FORMAT, decodedImage);
+		StorageUtils.storeFile(fileName, JPG_FORMAT, picBytes);
 		return new StringBuilder(fileName).append(JPG_FORMAT).toString();
 	}
 

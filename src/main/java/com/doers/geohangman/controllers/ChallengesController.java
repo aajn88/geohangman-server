@@ -1,7 +1,5 @@
 package com.doers.geohangman.controllers;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.doers.geohangman.constants.ResponseCode;
 import com.doers.geohangman.model.entities.Challenge;
-import com.doers.geohangman.model.restful.CreateChallengeImageRequest;
 import com.doers.geohangman.model.restful.CreateChallengeImageResponse;
 import com.doers.geohangman.model.restful.CreateChallengeRequest;
 import com.doers.geohangman.model.restful.CreateChallengeResponse;
@@ -80,27 +81,32 @@ public class ChallengesController {
 	}
 
 	/**
-	 * This service creates an image given a challengeId and the image bytes
-	 * (included into CreateChallengeImageRequest object)
+	 * This service creates an image given a challengeId and the image bytes (as
+	 * a multipart file)
 	 * 
-	 * @param request
-	 *            with all challenge image information
-	 * @return CreateChallengeImageResponse with all created image information
-	 *         as its Id
-	 * @throws IOException
+	 * @param challengeId The challenge Id, owner of the image
+	 * @param pic Challenge's pic
+	 * @return Upload response
 	 */
-	@RequestMapping(value = "/images", method = RequestMethod.POST)
-	public CreateChallengeImageResponse createChallengeImage(
-			@RequestBody CreateChallengeImageRequest request) throws IOException {
-		LOGGER.info("Create image challenge for challengeId = {}",
-				request.getChallengeId());
-		String imageUrl = challengeService.createChallengeImage(request);
+	@RequestMapping(value = "/{challengeId}/image", method = RequestMethod.POST)
+	public @ResponseBody CreateChallengeImageResponse createChallengeImage(
+			@PathVariable int challengeId,
+			@RequestParam("pic") MultipartFile pic) {
+		LOGGER.debug("Receiving Challenge's pic for challenge [{}]", challengeId);
 		CreateChallengeImageResponse response = new CreateChallengeImageResponse();
-		response.setImageUrl(imageUrl);
-		
-		LOGGER.info("Created Image Url = {}", imageUrl);
+		if (!pic.isEmpty()) {
+			try {
+				byte[] picBytes = pic.getBytes();
+				String imageUrl = challengeService.createChallengeImage(
+						challengeId, picBytes);
+				response.setImageUrl(imageUrl);
+			} catch (Exception e) {
+				LOGGER.error(
+						"An error has occurred while uploading files to WSA", e);
+				response.setResponseCode(ResponseCode.ERROR);
+			}
+		}
 
 		return response;
 	}
-
 }
