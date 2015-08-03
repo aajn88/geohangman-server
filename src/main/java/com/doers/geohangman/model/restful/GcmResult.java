@@ -63,4 +63,15 @@ public class GcmResult {
 		this.registrationId = registrationId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "GcmResult [messageId=" + messageId + ", error=" + error
+				+ ", registrationId=" + registrationId + "]";
+	}
+
 }

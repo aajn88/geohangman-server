@@ -3,6 +3,8 @@
  */
 package com.doers.geohangman.model.restful;
 
+import java.util.Arrays;
+
 /**
  * @author @author <a href="mailto:aajn88@gmail.com">Antonio Jimenez</a>
  *
@@ -92,6 +94,18 @@ public class BasicGcmResponse {
 	 */
 	public void setResults(GcmResult[] results) {
 		this.results = results;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BasicGcmResponse [multicastId=" + multicastId + ", success="
+				+ success + ", failure=" + failure + ", canonicalIds="
+				+ canonicalIds + ", results=" + Arrays.toString(results) + "]";
 	}
 
 }

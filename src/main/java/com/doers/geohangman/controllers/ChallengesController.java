@@ -47,6 +47,7 @@ public class ChallengesController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Challenge getChallenge(@PathVariable Integer id) {
+		LOGGER.debug("Challenge [{}] requested", id);
 		return challengeService.findChallengeById(id);
 	}
 
@@ -77,6 +78,7 @@ public class ChallengesController {
 	@RequestMapping(value = "/{challengeId}/image", method = RequestMethod.GET)
 	public GetChallengeImageResponse getChallengeImageByChallengeId(
 			@PathVariable Integer challengeId) {
+		LOGGER.debug("Challenge's image requested for Challenge [{}]", challengeId);
 		return challengeService.findChallengeImageByChallengeId(challengeId);
 	}
 

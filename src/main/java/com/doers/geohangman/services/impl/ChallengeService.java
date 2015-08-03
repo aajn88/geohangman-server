@@ -124,8 +124,12 @@ public class ChallengeService implements IChallengeService {
 		Validate.notNull(challenge,
 				"Challenge has not been found. The challenge does not exist");
 
+		LOGGER.debug(
+				"Uploading image to amazon's WSA for challenge [{}]. Image size: {} bytes",
+				challengeId, picBytes.length);
 		String imageUrl = uploadPic(picBytes);
 
+		LOGGER.debug("Saving challenge [{}]", challengeId);
 		ChallengeImage challengeImage = new ChallengeImage();
 		challengeImage.setChallengeId(challenge.getId());
 		challengeImage.setImageUrl(imageUrl);
@@ -146,13 +150,17 @@ public class ChallengeService implements IChallengeService {
 	 *            Challenge to be notified
 	 */
 	private void notifyOpponent(Challenge challenge) {
+		LOGGER.debug(
+				"Notifying challenge [{}] from challenger [{}] to opponent [{}]",
+				challenge.getId(), challenge.getChallengerId(),
+				challenge.getOpponentId());
 		BasicGcmRequest<GcmData> request = buildGcmChallengeNotification(challenge);
 
 		BasicGcmResponse response = RestUtils.exchange(
 				"https://gcm-http.googleapis.com/gcm/send",
 				BasicGcmRequest.class, request, BasicGcmResponse.class,
 				HttpMethod.POST, true);
-		
+
 		LOGGER.debug("GCM Response: [{}]", response);
 	}
 
@@ -193,8 +201,7 @@ public class ChallengeService implements IChallengeService {
 	 * @return The AWS URL
 	 * @throws IOException
 	 */
-	private String uploadPic(byte[] picBytes)
-			throws IOException {
+	private String uploadPic(byte[] picBytes) throws IOException {
 		String fileName = storeImageInServer(picBytes);
 		return uploadFile(fileName, Boolean.TRUE);
 	}
@@ -228,8 +235,7 @@ public class ChallengeService implements IChallengeService {
 	 * @return File name
 	 * @throws IOException
 	 */
-	private String storeImageInServer(byte[] picBytes)
-			throws IOException {
+	private String storeImageInServer(byte[] picBytes) throws IOException {
 		String fileName = StorageUtils.generateFileName();
 		StorageUtils.storeFile(fileName, JPG_FORMAT, picBytes);
 		return new StringBuilder(fileName).append(JPG_FORMAT).toString();
